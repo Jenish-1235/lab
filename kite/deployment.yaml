@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kite
+  namespace: kite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kite
+  template:
+    metadata:
+      labels:
+        app: kite
+    spec:
+      serviceAccountName: kite
+      containers:
+      - name: kite
+        image: ghcr.io/kite-org/kite:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_DSN
+          value: /data/db.sqlite
+        volumeMounts:
+        - mountPath: /data
+          name: kite-data
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "300m"
+      volumes:
+      - name: kite-data
+        persistentVolumeClaim:
+          claimName: kite-data
