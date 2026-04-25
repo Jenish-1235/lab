@@ -1,3 +1,4 @@
+#!/usr/bin/env -S just --list
 cluster_name := "lab"
 kind_config := "kind/kind-config.yaml"
 
