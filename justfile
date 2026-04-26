@@ -17,6 +17,8 @@ apply-all:
         --selector=app.kubernetes.io/component=controller \
         --timeout=90s
     kubectl apply -f kite/
+    kubectl apply -f prometheus/
+    kubectl apply -f grafana/
 
 apply-ingress:
     kubectl apply -f ingress/nginx-ingress.yaml
@@ -24,5 +26,11 @@ apply-ingress:
 apply-kite:
     kubectl apply -f kite/
 
+apply-grafana:
+    kubectl apply -f grafana/
+
+apply-prometheus:
+    kubectl apply -f prometheus/
+
 hosts:
-    echo "127.0.0.1 kite.local" | sudo tee -a /etc/hosts
+    echo "127.0.0.1 kite.local grafana.local" | sudo tee -a /etc/hosts
